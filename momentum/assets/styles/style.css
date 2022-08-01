@@ -1,0 +1,49 @@
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Header */
+
+.header {
+  flex: 1 1 auto; 
+
+  /* background-color: aqua; */
+
+}
+
+/* Main */
+
+.main {
+  flex: 1 1 auto; 
+
+
+  /* background-color: brown; */
+}
+
+.time,
+.date,
+.greeting {
+  width: 60%;
+  margin: 0 auto;
+  text-align: center;
+
+}
+.time {
+} 
+
+.date {
+}
+
+.greeting {
+}
+
+/* Footer */
+
+.footer {
+  flex: 1 1 auto; 
+
+  /* background-color: blue; */
+}
