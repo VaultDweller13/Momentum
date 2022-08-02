@@ -1,11 +1,15 @@
+html {
+  font-size: 10px;
+}
 
 body {
   display: flex;
   flex-direction: column;
   height: 100vh;
 
-  background-size: cover;
-  background-repeat: no-repeat;
+  background: no-repeat center/cover, rgba(0, 0, 0, 0.5);
+  background-blend-mode: multiply;
+
   transition: 1s;
   transition-delay: 300ms;
 }
@@ -19,8 +23,11 @@ body {
 /* Main */
 
 .main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   position: relative;
-  flex: 1 1 auto; 
+  flex: 1 1 auto;
 }
 
 .slider-button {
@@ -38,7 +45,6 @@ body {
 }
 
 .slider-button.left {
-  /* left: 0; */
   background: url(../img/svg/slider-prev.svg); 
 }
 
@@ -51,19 +57,49 @@ body {
 
 .time,
 .date,
-.greeting {
-  width: 60%;
-  margin: 0 auto;
-  text-align: center;
+.greeting-container {
+  margin: 1rem 0;
+  padding: 5px;
 
+  color: #ffffff;
+  text-align: center;
 }
+
 .time {
+  font-size: clamp(4.5rem, 10vw, 10rem);
 } 
 
 .date {
+  font-size: clamp(1.5rem, 2vw, 2.4rem);
 }
 
-.greeting {
+.greeting-container {
+  display: flex;
+  /* flex-wrap: wrap; */
+  gap: 1rem;
+
+  font-size: clamp(2rem, 3vw, 4rem);
+}
+
+.greeting-message {
+  flex: 1 1 auto;
+
+  text-align: right;
+}
+
+.greeting-container .input {
+  max-width: 50%;
+  flex: 1 1 auto;
+
+  color: #ffffff;
+
+  background: transparent;
+  border: none;
+}
+
+.greeting-container .input::placeholder {
+  color: #9c9c9c;
+  opacity: 1;
 }
 
 /* Footer */
