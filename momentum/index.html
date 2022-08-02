@@ -7,14 +7,22 @@
   <link rel="stylesheet" href="./assets/styles/normalize.css">
   <link rel="stylesheet" href="./assets/styles/style.css">
   <script src="./assets/scripts/index.js" defer type="module"></script>
-  <script src="./assets/scripts/slider.js" defer type="module"></script>
-
+  <!-- <script src="./assets/scripts/slider.js" defer type="module"></script> -->
   <title>Momentum</title>
 </head>
 <body>
   <header class="header">
     <div class="audio-player"></div>
-    <div class="weather"></div>
+    <div class="weather-container">
+      <input type="text" class="input weather-input" value="Minsk" placeholder="[Enter your city]">
+      <div class="weather-icon"></div>
+      <div class="weather-stats">
+        <span class="weather-temperature">25 C</span>
+        <span class="weather-clouds">clear sky</span>
+        <div class="weather-wind">1 m/s</div>
+        <div class="weather-humidity">69%</div>
+      </div>
+    </div>
   </header>
   <main class="main">
     <div class="slider-buttons">

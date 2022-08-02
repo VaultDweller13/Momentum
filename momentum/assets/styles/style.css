@@ -10,14 +10,40 @@ body {
   background: no-repeat center/cover, rgba(0, 0, 0, 0.5);
   background-blend-mode: multiply;
 
+  color: #FFFFFF;
+
   transition: 1s;
   transition-delay: 300ms;
+}
+
+.input {
+  box-sizing: border-box;
+  color: #ffffff;
+
+  background: transparent;
+  border: none;
 }
 
 /* Header */
 
 .header {
+  display: flex;
+  justify-content: space-between;
   flex: 1 1 auto; 
+  padding: 2rem;
+}
+
+.weather-container {
+  max-width: 15rem;
+  flex-basis: content;
+  font-size: 2rem;
+}
+
+.weather-input {
+  width: 100%;
+  padding: 0.5rem;
+  
+  border-bottom: 2px solid #FFFFFF;
 }
 
 /* Main */
@@ -61,7 +87,7 @@ body {
   margin: 1rem 0;
   padding: 5px;
 
-  color: #ffffff;
+  /* color: #ffffff; */
   text-align: center;
 }
 
@@ -90,11 +116,6 @@ body {
 .greeting-container .input {
   max-width: 50%;
   flex: 1 1 auto;
-
-  color: #ffffff;
-
-  background: transparent;
-  border: none;
 }
 
 .greeting-container .input::placeholder {
