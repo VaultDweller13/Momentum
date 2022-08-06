@@ -14,10 +14,12 @@ function getCityCoordinates(city) {
 }
 
 function getWeatherData(data) {
+  console.log(data);
   return {
-    temp: data.main.temp,
+    temp: Math.round(data.main.temp),
     humidity: data.main.humidity,
-    wind: data.wind.speed,
-    clouds: data.weather[0].description
+    wind: Math.round(data.wind.speed),
+    clouds: data.weather[0].description,
+    icon: `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
   }
 }

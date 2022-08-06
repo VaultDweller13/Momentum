@@ -1,3 +1,5 @@
+*, *::before, *::after {box-sizing: border-box;}
+
 html {
   font-size: 10px;
 }
@@ -10,6 +12,7 @@ body {
   background: no-repeat center/cover, rgba(0, 0, 0, 0.5);
   background-blend-mode: multiply;
 
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
   color: #FFFFFF;
 
   transition: 1s;
@@ -29,21 +32,37 @@ body {
 .header {
   display: flex;
   justify-content: space-between;
-  flex: 1 1 auto; 
+  align-items: flex-start;
+  flex: 1 1 auto;
+  height: 30vh; 
   padding: 2rem;
 }
 
 .weather-container {
-  max-width: 15rem;
-  flex-basis: content;
-  font-size: 2rem;
+  max-width: 18rem;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 1.6rem;
 }
 
 .weather-input {
   width: 100%;
   padding: 0.5rem;
   
-  border-bottom: 2px solid #FFFFFF;
+  border-bottom: 1px solid #FFFFFF;
+
+  font-size: 2rem;
+}
+
+.weather-icon {
+  width: 75px;
+  height: 75px;
+
+  background-position: center;
+  background-size: contain;
 }
 
 /* Main */
@@ -54,6 +73,8 @@ body {
   justify-content: center;
   position: relative;
   flex: 1 1 auto;
+
+  height: 40vh;
 }
 
 .slider-button {
@@ -92,6 +113,7 @@ body {
 }
 
 .time {
+  font-weight: 700;
   font-size: clamp(4.5rem, 10vw, 10rem);
 } 
 
@@ -127,4 +149,5 @@ body {
 
 .footer {
   flex: 1 1 auto; 
+  height: 30vh;
 }

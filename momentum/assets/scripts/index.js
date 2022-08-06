@@ -42,8 +42,9 @@ function getWeather(city) {
   weather.getWeather(city).then(weather => {
     temperature.textContent = `${weather.temp} ℃`;
     clouds.textContent = weather.clouds;
-    wind.textContent = `${weather.wind} m/s`;
-    humidity.textContent = `${weather.humidity}%`;
+    wind.textContent = `Wind speed: ${weather.wind} m/s`;
+    humidity.textContent = `Humidity: ${weather.humidity}%`;
+    weatherIcon.style.backgroundImage = `url(${weather.icon}`;
   })
 }
 
