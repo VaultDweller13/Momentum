@@ -1,7 +1,13 @@
-export function setBackground(timeOfDay, imageIndex = null) {
+export function setBackground(element, timeOfDay, imageIndex) {
   const imageNumber = imageIndex ? imageIndex : getRandomNumber(1, 21).toString().padStart(2, '0');
+  const url = `https://raw.githubusercontent.com/VaultDweller13/stage1-tasks/assets/images/${timeOfDay}/${imageNumber}.jpg`;
+  let img = new Image();
+  img.src = url;
 
-  return `url(https://raw.githubusercontent.com/VaultDweller13/stage1-tasks/assets/images/${timeOfDay}/${imageNumber}.jpg)`;
+  img.addEventListener('load', () => {
+    element.style.backgroundImage = `url(${img.src})`;
+    img = null;
+  });
 }
 
 export function changeSlide(element, offset) {
@@ -12,7 +18,7 @@ export function changeSlide(element, offset) {
 
   slideNumber = slideNumber < 1 ? 20 : slideNumber > 20 ? 1 : slideNumber;  
 
-  return setBackground(timeOfDay, slideNumber.toString().padStart(2, '0'));
+  return setBackground(element, timeOfDay, slideNumber.toString().padStart(2, '0'));
 }
 
 function getRandomNumber(min, max) {

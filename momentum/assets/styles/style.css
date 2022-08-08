@@ -15,8 +15,7 @@ body {
   font-family: 'Roboto', Arial, Helvetica, sans-serif;
   color: #FFFFFF;
 
-  transition: 1s;
-  transition-delay: 300ms;
+  transition: 1s ease-out;
 }
 
 .input {
@@ -135,12 +134,12 @@ body {
   text-align: right;
 }
 
-.greeting-container .input {
+.greeting-input {
   max-width: 50%;
   flex: 1 1 auto;
 }
 
-.greeting-container .input::placeholder {
+.greeting-input::placeholder {
   color: #9c9c9c;
   opacity: 1;
 }
@@ -148,6 +147,44 @@ body {
 /* Footer */
 
 .footer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   flex: 1 1 auto; 
+  width: 100%;
   height: 30vh;
+  padding: 2rem;
+}
+
+.quote-wrapper {
+  /* width: 60%; */
+  margin: 0 auto;
+
+  font-size: 1.6rem;
+  text-align: center;
+}
+
+.button-refresh {
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: none;
+  background: url(../img/svg/refresh-icon.svg);
+  /* transform: rotate(-180deg); */
+  transition: transform 1s;
+
+
+}
+
+.rotate {
+  transform: rotate(180deg);
+  transition: transform 1s;
+}
+
+.blockquote::before {
+  content: '\201C';
+}
+
+.blockquote::after {
+  content: '\201D';
 }
