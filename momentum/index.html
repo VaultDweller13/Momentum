@@ -13,7 +13,14 @@
 </head>
 <body>
   <header class="header">
-    <div class="audio-player"></div>
+    <div class="audio-player-wrapper">
+      <div class="controls">
+        <button class="button prev-track"></button>
+        <button class="button play"></button>
+        <button class="button next-track"></button>
+      </div>
+      <ul class="audio-player"></ul>
+    </div>
     <div class="weather-container">
       <input type="text" class="input weather-input" value="Minsk" placeholder="[Enter your city]">
       <div class="weather-icon"></div>
@@ -27,8 +34,8 @@
   </header>
   <main class="main">
     <div class="slider-buttons">
-      <button class="slider-button left"></button>
-      <button class="slider-button right"></button>
+      <button class="button slider-button left"></button>
+      <button class="button slider-button right"></button>
     </div>
     <div class="time"></div>
     <div class="date"></div>

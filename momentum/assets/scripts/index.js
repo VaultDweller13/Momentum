@@ -1,12 +1,16 @@
 import * as slider from './slider.js';
 import * as dateTime from './datetime.js';
-import * as weather from './weather.js'
-import * as quotes from './quotes.js'
+import * as weather from './weather.js';
+import * as quotes from './quotes.js';
+import { playList } from './playList.js';
 
 const body = document.querySelector('body');
 const header = document.querySelector('.header');
 const main = document.querySelector('.main');
 const footer = document.querySelector('.footer');
+
+// Audio player constants
+const audioPlayer = header.querySelector('.audio-player'); 
 
 // Slider constants
 const sliderButtonLeft = main.querySelector('.left');
@@ -35,6 +39,19 @@ const quoteRefreshButton = footer.querySelector('.button-refresh');
 
 // Set background
 body.style.backgroundImage = slider.setBackground(body, dateTime.getTimeOfDay());
+
+// Set audio player
+addTracks(playList);
+
+function addTracks(playList) {
+  console.log(playList);
+  playList.forEach((item, index) => {
+    const li = document.createElement('li');
+    li.textContent = `${item.title} - ${item.artist}`;
+    audioPlayer.appendChild(li);
+  }) 
+}
+
 
 // Slider buttons
 sliderButtonLeft.addEventListener('click', e => body.style.backgroundImage = slider.changeSlide(body, -1));
@@ -92,15 +109,17 @@ function rotate(element, deg) {
 }
 
 // Set local storage
+window.addEventListener('beforeunload', setLocalStorage);
+window.addEventListener('load', getLocalStorage);
+
 function setLocalStorage() {
   localStorage.setItem('city', city.value);
   localStorage.setItem('user', userName.value);
 }
 
 function getLocalStorage() {
-  city.value = localStorage.getItem('city');
+  city.value ? localStorage.getItem('city') : 'Minsk';
   userName.value = localStorage.getItem('user');
 }
 
-window.addEventListener('beforeunload', setLocalStorage);
-window.addEventListener('load', getLocalStorage);
+
