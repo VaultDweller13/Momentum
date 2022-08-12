@@ -47,7 +47,11 @@ function addTracks(playList) {
   console.log(playList);
   playList.forEach((item, index) => {
     const li = document.createElement('li');
+    const audio = document.createElement('audio');
     li.textContent = `${item.title} - ${item.artist}`;
+    audio.textContent = 'Your browser don\'t support audio playback';
+    audio.src = item.src;
+    li.appendChild(audio);
     audioPlayer.appendChild(li);
   }) 
 }
