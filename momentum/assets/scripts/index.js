@@ -2,6 +2,7 @@ import * as slider from './slider.js';
 import * as dateTime from './datetime.js';
 import * as weather from './weather.js';
 import * as quotes from './quotes.js';
+import { AudioPlayer } from './audioPlayer.js'
 import { playList } from './playList.js';
 
 const body = document.querySelector('body');
@@ -11,6 +12,9 @@ const footer = document.querySelector('.footer');
 
 // Audio player constants
 const audioPlayer = header.querySelector('.audio-player'); 
+const playButton = header.querySelector('.play');
+const prevButton = header.querySelector('.prev-track');
+const nextButton = header.querySelector('.next-track');
 
 // Slider constants
 const sliderButtonLeft = main.querySelector('.left');
@@ -41,21 +45,31 @@ const quoteRefreshButton = footer.querySelector('.button-refresh');
 body.style.backgroundImage = slider.setBackground(body, dateTime.getTimeOfDay());
 
 // Set audio player
-addTracks(playList);
+const player = new AudioPlayer(playList);
 
-function addTracks(playList) {
-  console.log(playList);
-  playList.forEach((item, index) => {
-    const li = document.createElement('li');
-    const audio = document.createElement('audio');
-    li.textContent = `${item.title} - ${item.artist}`;
-    audio.textContent = 'Your browser don\'t support audio playback';
-    audio.src = item.src;
-    li.appendChild(audio);
-    audioPlayer.appendChild(li);
-  }) 
+player.showPlayList(audioPlayer);
+playButton.addEventListener('click', () => {
+  if(player.isPaused()) {
+    togglePlayPause();
+    player.play()
+  } else {
+    togglePlayPause();
+    player.pause();
+  }
+});
+prevButton.addEventListener('click', () => {
+  if (playButton.classList.contains('play')) togglePlayPause();
+  player.prev();
+});
+nextButton.addEventListener('click', () => {
+  if (playButton.classList.contains('play')) togglePlayPause();
+  player.next();
+});
+
+function togglePlayPause() {
+  playButton.classList.toggle('pause');
+  playButton.classList.toggle('play');
 }
-
 
 // Slider buttons
 sliderButtonLeft.addEventListener('click', e => body.style.backgroundImage = slider.changeSlide(body, -1));

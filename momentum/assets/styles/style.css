@@ -62,8 +62,16 @@ body {
   background: url(../img/svg/audio-play.svg);
 }
 
+.pause {
+  background: url(../img/svg/audio-pause.svg);
+}
+
 .next-track {
   background: url(../img/svg/audio-next.svg);
+}
+
+.current-track {
+  color: #f1cf0b;
 }
 
 .weather-container {
