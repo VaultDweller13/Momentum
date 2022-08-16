@@ -13,7 +13,7 @@
 </head>
 <body>
   <header class="header">
-    <div class="audio-player-wrapper">
+    <div class="audio-player-wrapper audio">
       <div class="controls">
         <button class="button prev-track"></button>
         <button class="button play"></button>
@@ -21,8 +21,9 @@
       </div>
       <ul class="audio-player"></ul>
     </div>
-    <div class="weather-container">
+    <div class="weather-container weather">
       <input type="text" class="input weather-input" value="Minsk" placeholder="[Enter your city]">
+      <div class="weather-error"></div>
       <div class="weather-icon"></div>
       <div class="weather-description-container">
         <span class="weather-temperature"></span>
@@ -39,14 +40,52 @@
     </div>
     <div class="time"></div>
     <div class="date"></div>
-    <div class="greeting-container">
+    <div class="greeting-container greeting">
       <span class="greeting-message"></span>
       <input class="greeting-input input" type="text" name="name" id="name" placeholder="[Enter your name]">
     </div>
   </main>
   <footer class="footer">
     <button class="button settings-button"></button>
-    <figure class="quote-wrapper">
+    <div class="pop-up-container">
+      <div class="pop-up-settings">
+        <div class="lang">
+          <label for="lang">Language:</label>
+          <select class="select language-select input" name="lang" id="lang">
+            <option value="en">EN</option>
+            <option value="ru">RU</option>
+          </select>
+        </div>
+        <div class="photo">
+          <label for="photo">Photo source:</label>
+          <select class="select photo-select input" name="photoAPI" id="photo">
+            <option value="github">Github</option>
+            <option value="unsplash">Unsplash</option>
+            <option value="flickr">Flickr</option>
+          </select>
+          <label for="tag">Tag:</label>
+          <input class="input-tag input" type="text" name="tag" id="tag" placeholder="nature">
+        </div>
+        <fieldset class="block-selection">
+          <legend>Widgets to show</legend>
+          <label for="time">Time</label>
+          <input class="block-selector" type="checkbox" name="time" id="time" checked>
+          <label for="date">Date</label>
+          <input class="block-selector" type="checkbox" name="date" id="date" checked>
+          <label for="greeting">Greeting</label>
+          <input class="block-selector" type="checkbox" name="greeting" id="greeting" checked>
+          <label for="quote">Quote</label>
+          <input class="block-selector" type="checkbox" name="quote" id="quote" checked>
+          <label for="weather">Weather</label>
+          <input class="block-selector" type="checkbox" name="weather" id="weather" checked>
+          <label for="audio">Audio Player</label>
+          <input class="block-selector" type="checkbox" name="audio" id="audio" checked>
+          <label for="todo">To Do list</label>
+          <input class="block-selector" type="checkbox" name="todo" id="todo" checked>
+        </fieldset>
+      </div>
+    </div>
+    <figure class="quote-wrapper quote">
       <button class="button button-refresh"></button>
       <blockquote class="blockquote"></blockquote>
       <figcaption class="quote-caption"></figcaption>

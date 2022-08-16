@@ -1,5 +1,5 @@
-export function getQuote() {
-    const src = 'assets/files/quotes.json';
+export function getQuote(lang) {
+    const src = `assets/files/quotes${lang}.json`;
 
     return fetch(src)
             .then(res => res.json())

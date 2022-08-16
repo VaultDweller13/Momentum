@@ -1,8 +1,8 @@
 const KEY = 'dd78fca7a4c44e2da151ed13848bf896';
 
-export function getWeather(city) {
+export function getWeather(city, lang) {
   return getCityCoordinates(city)
-    .then(res => loadJson(`https://api.openweathermap.org/data/2.5/weather?lat=${res[0]}&lon=${res[1]}&units=metric&appid=${KEY}`))
+    .then(res => loadJson(`https://api.openweathermap.org/data/2.5/weather?lat=${res[0]}&lon=${res[1]}&units=metric&lang=${lang}&appid=${KEY}`))
     .then(getWeatherData);
 }
 
@@ -14,6 +14,7 @@ function getCityCoordinates(city) {
 }
 
 function getWeatherData(data) {
+  console.log(data)
   return {
     temp: Math.round(data.main.temp),
     humidity: data.main.humidity,

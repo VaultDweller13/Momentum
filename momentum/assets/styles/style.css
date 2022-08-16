@@ -34,6 +34,24 @@ body {
   border: none;
 }
 
+button:hover {
+  cursor: pointer;
+}
+
+.button:active {
+  transform: scale(0.9);
+}
+
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transition: 1s;
+}
+
+.time, .date, .greeting, .quote, .weather, .audio, .todo {
+  transition: 1s;
+}
+
 /* Header */
 
 .header {
@@ -93,6 +111,10 @@ body {
   font-size: 2rem;
 }
 
+.weather-error {
+  margin-top: -10px;
+}
+
 .weather-icon {
   width: 75px;
   height: 75px;
@@ -117,10 +139,6 @@ body {
   position: absolute;
   top : 50%;
   transform: translateY(-50%);
-}
-
-.slider-button:hover {
-  cursor: pointer;
 }
 
 .slider-button.left {
@@ -190,6 +208,59 @@ body {
 
 .settings-button {
   background: url(../img/svg/settings-icon.svg);
+}
+
+.pop-up-container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  /* background-color: rgba(231, 9, 9, 0.5); */
+
+  visibility: hidden;
+}
+
+.pop-up-settings {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.5s ease-in;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  max-width: 33vw;
+  padding: 1rem;
+
+  font-size: 1.6rem;
+
+  background-color: #000000;
+}
+
+.visible{
+  visibility: visible;
+  opacity: 1;
+}
+
+label {
+  display: inline-block;
+  width: 10rem;
+  text-align: end;
+}
+
+option,
+select {
+  background-color: black;
+  color: white;
+}
+
+.block-selection {
+  column-count: 2;
 }
 
 .quote-wrapper {
