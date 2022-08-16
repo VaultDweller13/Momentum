@@ -14,7 +14,6 @@ function getCityCoordinates(city) {
 }
 
 function getWeatherData(data) {
-  console.log(data)
   return {
     temp: Math.round(data.main.temp),
     humidity: data.main.humidity,

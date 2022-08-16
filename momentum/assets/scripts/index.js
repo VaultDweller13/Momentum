@@ -2,11 +2,16 @@ import * as slider from './slider.js';
 import * as dateTime from './datetime.js';
 import * as weather from './weather.js';
 import * as quotes from './quotes.js';
-import * as settings from './settings.js';
 import { AudioPlayer } from './audioPlayer.js'
 import { playList } from './playList.js';
 
-let lang = 'EN';
+let state = {
+  language: localStorage.lang || 'EN',
+  photoSource: localStorage.photoSource || 'github',
+  blocks: ['time', 'date', 'greeting', 'quote', 'weather', 'audio', 'todolist'],
+}
+
+let lang = state.language;
 
 const body = document.querySelector('body');
 const header = document.querySelector('.header');
@@ -51,6 +56,19 @@ const popUpContainer = document.querySelector('.pop-up-container')
 const settingsPopUp = document.querySelector('.pop-up-settings');
 const blockSelectors = Array.from(document.querySelectorAll('.block-selector'));
 const languageSelector = document.querySelector('.language-select');
+const labelLanguage = document.querySelector('.label-language');
+const labelPhoto = document.querySelector('.label-photo');
+const labelTag = document.querySelector('.label-tag');
+const labelTime = document.querySelector('.label-time');
+const labelDate = document.querySelector('.label-date');
+const labelGreeting = document.querySelector('.label-greeting');
+const labelQuote = document.querySelector('.label-quote');
+const labelWeather = document.querySelector('.label-weather');
+const labelAudio = document.querySelector('.label-audio');
+const labelToDo = document.querySelector('.label-todo');
+const legendWidgets = document.querySelector('.legend-widgets');
+const photoSource = document.querySelector('.photo-select');
+const tagInput = document.querySelector('.input-tag'); 
 
 // Set local storage
 window.addEventListener('beforeunload', setLocalStorage);
@@ -59,6 +77,9 @@ window.addEventListener('load', getLocalStorage);
 function setLocalStorage() {
   localStorage.setItem('city', city.value);
   localStorage.setItem('user', userName.value);
+  localStorage.setItem('lang', state.language);
+  localStorage.setItem('photoSrc', state.photoSource);
+  localStorage.setItem('blocks', state.blocks);
 }
 
 function getLocalStorage() {
@@ -68,6 +89,18 @@ function getLocalStorage() {
 
   if (localStorage.getItem('user')) {
     userName.value = localStorage.getItem('user');
+  }
+
+  if (localStorage.getItem('lang')) {
+    state.language = localStorage.getItem('lang');
+  }
+
+  if (localStorage.getItem('photoSrc')) {
+    state.photoSource = localStorage.getItem('photoSrc');
+  }
+
+  if (localStorage.getItem('blocks')) {
+    state.blocks = localStorage.getItem('blocks').split(',');
   }
 }
 
@@ -121,6 +154,7 @@ function showDateTime() {
     RU: `${getGreeting()}`
   };
 
+  userName.placeholder = lang === 'RU' ? '[Введите свое имя]' : '[Enter your name]';
   dateBlock.textContent = dateTime.getDate(lang);
   timeBlock.textContent = dateTime.getTime(lang);
   greetingMessage.textContent = `${greetingTranslation[lang]} ${dateTime.getTimeOfDay(lang)},`;
@@ -141,6 +175,7 @@ function showDateTime() {
 }
 
 // Get weather
+city.defaultValue = lang === 'RU' ? 'Минск' : 'Minsk'; 
 getLocalStorage();
 showWeather(city.value, lang);
 city.addEventListener('change', () => showWeather(city.value, lang));
@@ -159,6 +194,7 @@ function showWeather(city, lang) {
 
   weather.getWeather(city, lang)
     .then(weather => {
+      weatherError.textContent = null;
       temperature.textContent = `${weather.temp} ℃`;
       clouds.textContent = weather.clouds;
       wind.textContent = `${weatherTranslation[lang].wind}: ${weather.wind} m/s`;
@@ -202,27 +238,91 @@ function rotate(element, deg) {
 }
 
 // Settings
+populateSettings();
 settingsButton.addEventListener('click', () => {
   popUpContainer.classList.add('visible');
   settingsPopUp.classList.add('visible');
-})
+});
 
 popUpContainer.addEventListener('click', (e) => {
   if (e.target === popUpContainer){
     settingsPopUp.classList.remove('visible');
     popUpContainer.classList.remove('visible');
   }
-})
+});
 
 blockSelectors.forEach(checkbox => {
   checkbox.addEventListener('input', () => {
-    settings.toggleBlock(checkbox.name);
-  })
+    toggleBlock(checkbox.name);
+  });
 });
 
-languageSelector.addEventListener('change', () => {
-  lang = languageSelector.value.toUpperCase();
+languageSelector.value = state.language.toLowerCase();
+languageSelector.addEventListener('change', changeLanguage);
+
+photoSource.addEventListener('change', () => {
+  state.photoSource = photoSource.value;
+
+  if (photoSource.value === 'github') {
+    labelTag.classList.add('hidden');
+    tagInput.classList.add('hidden');
+  } else {
+    labelTag.classList.remove('hidden');
+    tagInput.classList.remove('hidden');
+  }
+});
+
+function toggleBlock(block) {
+  const element = document.querySelector(`.${block}`);
+  element.classList.toggle('hidden');
+}
+
+function changeLanguage() {
+  state.language = languageSelector.value.toUpperCase();
+  lang = state.language;
   showDateTime();
   showWeather(city.value, lang);
   showQuote();
-})
+  populateSettings();
+}
+
+function populateSettings() {
+  if (lang === 'RU') {
+    labelLanguage.textContent = 'Язык';
+    labelPhoto.textContent = 'Источник фото';
+    labelTag.textContent = 'Тэг:';
+    legendWidgets.textContent = 'Виджеты';
+    labelTime.textContent = 'Время';
+    labelDate.textContent = 'Дата';
+    labelGreeting.textContent = 'Приветствие';
+    labelQuote.textContent = 'Цитата';
+    labelWeather.textContent = 'Погода';
+    labelAudio.textContent = 'Аудио';
+    labelToDo.textContent = 'Список дел';
+  }
+
+  if (lang === 'EN') {
+    labelLanguage.textContent = 'Language';
+    labelPhoto.textContent = 'Photo source';
+    labelTag.textContent = 'Tag:';
+    legendWidgets.textContent = 'Widgets';
+    labelTime.textContent = 'Time';
+    labelDate.textContent = 'Date';
+    labelGreeting.textContent = 'Greeting';
+    labelQuote.textContent = 'Quote';
+    labelWeather.textContent = 'Weather';
+    labelAudio.textContent = 'Audio';
+    labelToDo.textContent = 'To Do list';
+  }
+
+  photoSource.value = state.photoSource;
+
+  if (photoSource.value === 'github') {
+    labelTag.classList.add('hidden');
+    tagInput.classList.add('hidden');
+  } else {
+    labelTag.classList.remove('hidden');
+    tagInput.classList.remove('hidden');
+  }
+
+}

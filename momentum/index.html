@@ -15,14 +15,14 @@
   <header class="header">
     <div class="audio-player-wrapper audio">
       <div class="controls">
-        <button class="button prev-track"></button>
-        <button class="button play"></button>
-        <button class="button next-track"></button>
+        <button class="button button-scalable prev-track"></button>
+        <button class="button button-scalable play"></button>
+        <button class="button button-scalable next-track"></button>
       </div>
       <ul class="audio-player"></ul>
     </div>
     <div class="weather-container weather">
-      <input type="text" class="input weather-input" value="Minsk" placeholder="[Enter your city]">
+      <input type="text" class="input weather-input" placeholder="[Enter your city]">
       <div class="weather-error"></div>
       <div class="weather-icon"></div>
       <div class="weather-description-container">
@@ -46,41 +46,41 @@
     </div>
   </main>
   <footer class="footer">
-    <button class="button settings-button"></button>
+    <button class="button button-scalable settings-button"></button>
     <div class="pop-up-container">
       <div class="pop-up-settings">
         <div class="lang">
-          <label for="lang">Language:</label>
+          <label class="label label-language" for="lang">Language:</label>
           <select class="select language-select input" name="lang" id="lang">
             <option value="en">EN</option>
             <option value="ru">RU</option>
           </select>
         </div>
         <div class="photo">
-          <label for="photo">Photo source:</label>
+          <label class="label label-photo" for="photo">Photo source:</label>
           <select class="select photo-select input" name="photoAPI" id="photo">
             <option value="github">Github</option>
             <option value="unsplash">Unsplash</option>
             <option value="flickr">Flickr</option>
           </select>
-          <label for="tag">Tag:</label>
+          <label class="label label-tag" for="tag">Tag:</label>
           <input class="input-tag input" type="text" name="tag" id="tag" placeholder="nature">
         </div>
         <fieldset class="block-selection">
-          <legend>Widgets to show</legend>
-          <label for="time">Time</label>
+          <legend class="legend legend-widgets">Widgets</legend>
+          <label class="label label-time" for="time">Time</label>
           <input class="block-selector" type="checkbox" name="time" id="time" checked>
-          <label for="date">Date</label>
+          <label class="label label-date" for="date">Date</label>
           <input class="block-selector" type="checkbox" name="date" id="date" checked>
-          <label for="greeting">Greeting</label>
+          <label class="label label-greeting" for="greeting">Greeting</label>
           <input class="block-selector" type="checkbox" name="greeting" id="greeting" checked>
-          <label for="quote">Quote</label>
+          <label class="label label-quote" for="quote">Quote</label>
           <input class="block-selector" type="checkbox" name="quote" id="quote" checked>
-          <label for="weather">Weather</label>
+          <label class="label label-weather" for="weather">Weather</label>
           <input class="block-selector" type="checkbox" name="weather" id="weather" checked>
-          <label for="audio">Audio Player</label>
+          <label class="label label-audio" for="audio">Audio Player</label>
           <input class="block-selector" type="checkbox" name="audio" id="audio" checked>
-          <label for="todo">To Do list</label>
+          <label class="label label-todo" for="todo">To Do list</label>
           <input class="block-selector" type="checkbox" name="todo" id="todo" checked>
         </fieldset>
       </div>

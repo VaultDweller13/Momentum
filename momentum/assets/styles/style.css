@@ -38,7 +38,7 @@ button:hover {
   cursor: pointer;
 }
 
-.button:active {
+.button-scalable:active {
   transform: scale(0.9);
 }
 
@@ -149,7 +149,10 @@ button:hover {
   right: 0;
 
   background: url(../img/svg/slider-next.svg);
+}
 
+.slider-button:active {
+  transform: translateY(-50%) scale(0.9);
 }
 
 .time,
@@ -234,7 +237,7 @@ button:hover {
   display: flex;
   flex-direction: column;
   gap: 5px;
-  max-width: 33vw;
+  max-width: 40vw;
   padding: 1rem;
 
   font-size: 1.6rem;
@@ -249,7 +252,7 @@ button:hover {
 
 label {
   display: inline-block;
-  width: 10rem;
+  width: 15rem;
   text-align: end;
 }
 
@@ -259,12 +262,12 @@ select {
   color: white;
 }
 
-.block-selection {
-  column-count: 2;
+.label-tag, 
+.input-tag {
+  transition: 1s;
 }
 
 .quote-wrapper {
-  /* width: 60%; */
   margin: 0 auto;
 
   font-size: 1.6rem;
