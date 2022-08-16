@@ -8,7 +8,7 @@ import { playList } from './playList.js';
 let state = {
   language: localStorage.lang || 'EN',
   photoSource: localStorage.photoSource || 'github',
-  blocks: ['time', 'date', 'greeting', 'quote', 'weather', 'audio', 'todolist'],
+  blocks: localStorage.blocks || ['time', 'date', 'greeting', 'quote', 'weather', 'audio', 'todolist'],
 }
 
 let lang = state.language;
@@ -148,7 +148,7 @@ sliderButtonRight.addEventListener('click', e => body.style.backgroundImage = sl
 showDateTime();
 
 function showDateTime() {
-  const getTimeOfDay = dateTime.getTimeOfDay(lang)
+  const TimeOfDay = dateTime.getTimeOfDay(lang)
   const greetingTranslation = {
     EN: 'Good',
     RU: `${getGreeting()}`
@@ -163,11 +163,11 @@ function showDateTime() {
 
   function getGreeting() {
     if (lang === 'RU') {
-      switch (getTimeOfDay) {
+      switch (TimeOfDay) {
         case 'утро': return 'Доброе';
-        case  'день': return 'Добрый';
+        case 'день': return 'Добрый';
         case 'вечер': return 'Добрый';
-        case 'ночь': return 'Доброй';
+        case 'ночи': return 'Доброй';
         default: 'Добрый';
       }
     }
@@ -272,6 +272,19 @@ photoSource.addEventListener('change', () => {
   }
 });
 
+blockSelectors.forEach(block => {
+  block.addEventListener('change', () => {
+    state.blocks = getWidgets();
+    console.log(state.blocks);
+  } );
+});
+
+function getWidgets() {
+  return blockSelectors
+    .filter(block => block.checked)
+    .map(block => block.name);
+}
+
 function toggleBlock(block) {
   const element = document.querySelector(`.${block}`);
   element.classList.toggle('hidden');
@@ -325,4 +338,13 @@ function populateSettings() {
     tagInput.classList.remove('hidden');
   }
 
+  blockSelectors.forEach(block => {
+    if (state.blocks.includes(block.name)) {
+      block.checked = true;
+      block.classList.contains('hidden') ? toggleBlock(block.name) : null;
+    } else {
+      block.checked = false;
+      !block.classList.contains('hidden') ? toggleBlock(block.name) : null;
+    }
+  })
 }
