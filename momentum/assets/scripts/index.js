@@ -8,7 +8,9 @@ import { playList } from './playList.js';
 let state = {
   language: localStorage.lang || 'EN',
   photoSource: localStorage.photoSource || 'github',
-  blocks: localStorage.blocks || ['time', 'date', 'greeting', 'quote', 'weather', 'audio', 'todolist'],
+  // blocks: localStorage.blocks || ['time', 'date', 'greeting', 'quote', 'weather', 'audio', 'todolist'],
+  blocks: localStorage.blocks || ['time', 'date', 'greeting', 'quote', 'weather', 'audio'],
+
 }
 
 let lang = state.language;
@@ -65,7 +67,7 @@ const labelGreeting = document.querySelector('.label-greeting');
 const labelQuote = document.querySelector('.label-quote');
 const labelWeather = document.querySelector('.label-weather');
 const labelAudio = document.querySelector('.label-audio');
-const labelToDo = document.querySelector('.label-todo');
+// const labelToDo = document.querySelector('.label-todo');
 const legendWidgets = document.querySelector('.legend-widgets');
 const photoSource = document.querySelector('.photo-select');
 const tagInput = document.querySelector('.input-tag'); 
@@ -311,7 +313,7 @@ function populateSettings() {
     labelQuote.textContent = 'Цитата';
     labelWeather.textContent = 'Погода';
     labelAudio.textContent = 'Аудио';
-    labelToDo.textContent = 'Список дел';
+    // labelToDo.textContent = 'Список дел';
   }
 
   if (lang === 'EN') {
@@ -325,7 +327,7 @@ function populateSettings() {
     labelQuote.textContent = 'Quote';
     labelWeather.textContent = 'Weather';
     labelAudio.textContent = 'Audio';
-    labelToDo.textContent = 'To Do list';
+    // labelToDo.textContent = 'To Do list';
   }
 
   photoSource.value = state.photoSource;
