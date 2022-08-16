@@ -9,7 +9,7 @@ let state = {
   language: localStorage.lang || 'EN',
   photoSource: localStorage.photoSource || 'github',
   // blocks: localStorage.blocks || ['time', 'date', 'greeting', 'quote', 'weather', 'audio', 'todolist'],
-  blocks: localStorage.blocks || ['time', 'date', 'greeting', 'quote', 'weather', 'audio'],
+  blocks: localStorage.blocks ?? ['time', 'date', 'greeting', 'quote', 'weather', 'audio'],
 
 }
 
@@ -277,7 +277,6 @@ photoSource.addEventListener('change', () => {
 blockSelectors.forEach(block => {
   block.addEventListener('change', () => {
     state.blocks = getWidgets();
-    console.log(state.blocks);
   } );
 });
 
@@ -341,12 +340,13 @@ function populateSettings() {
   }
 
   blockSelectors.forEach(block => {
+    const element = document.querySelector(`.${block.name}`);
     if (state.blocks.includes(block.name)) {
       block.checked = true;
-      block.classList.contains('hidden') ? toggleBlock(block.name) : null;
+      element.classList.contains('hidden') ? toggleBlock(block.name) : null;
     } else {
       block.checked = false;
-      !block.classList.contains('hidden') ? toggleBlock(block.name) : null;
+      !element.classList.contains('hidden') ? toggleBlock(block.name) : null;
     }
-  })
+  });
 }
