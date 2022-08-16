@@ -286,3 +286,26 @@ select {
 .blockquote::after {
   content: '\201D';
 }
+.social {
+  display: flex;
+  gap: 0.5rem
+}
+
+.copywright {
+  font-size: 1.6rem;
+}
+
+.github-logo {
+  display: block;
+  width: 48px;
+  height: 48px;
+
+  background: url(../img/svg/github-logo.svg);
+}
+
+.rsschool-logo {
+  width: 48px;
+  height: 48px;
+
+  background: url(../img/svg/rsschool-logo.svg) center / contain no-repeat;
+}
