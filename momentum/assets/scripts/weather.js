@@ -9,7 +9,7 @@ export function getWeather(city, lang) {
 const loadJson = url => fetch(url).then(res => res.json());
 
 function getCityCoordinates(city) {
-  return loadJson(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${KEY}`)
+  return loadJson(`https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${KEY}`)
     .then(data => [data[0].lat, data[0].lon]);
 }
 
@@ -19,6 +19,6 @@ function getWeatherData(data) {
     humidity: data.main.humidity,
     wind: Math.round(data.wind.speed),
     clouds: data.weather[0].description,
-    icon: `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
+    icon: `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
   }
 }
