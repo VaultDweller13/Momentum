@@ -1,5 +1,4 @@
 const unsplashKey ='pPRP0B5yczGaO6vkwpyN-pgy2hJEQ_6UBMs0NON5-4I';
-const flickrKey ='35e6180608930bbaefa70302798699ac';
 let currentImageIndex;
 let currentImagesArray;
 let currentSource;
@@ -33,7 +32,6 @@ function getRandomNumber(min, max) {
 export function getImages(source, query) {
   const photoAPI = {
     unsplash: `https://api.unsplash.com/search/photos?page=1&query=${query}&client_id=${unsplashKey}`,
-    flickr: `htttps://flickr.photos.search&api_key=${flickrKey}&tags=${query}&format=json`
   }
 
   if (source === 'github') {
@@ -45,11 +43,32 @@ export function getImages(source, query) {
     }
     return images;
   }
+
+  if (source === 'flickr') {
+    return fetchFlickr(query);
+  }
   
   return fetch(photoAPI[source])
     .then(res => res.json())
     .then(data => {
-      console.log(data);
       return data.results.map(item => item.urls.regular);
     });
+}
+
+export async function fetchFlickr(query) {
+  const flickrKey ='35e6180608930bbaefa70302798699ac';
+  const url = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrKey}&tags=${query}&format=json&nojsoncallback=1`
+
+  const data = await (await fetch(url)).json();
+  const propsArray = data.photos.photo;
+  return propsArray.map(constructURL)
+
+  function constructURL(props) {
+    const serverId = props.server;
+    const id = props.id;
+    const secret = props.secret;
+    const sizeSuffix = 'b';
+
+    return `https://live.staticflickr.com/${serverId}/${id}_${secret}_${sizeSuffix}.jpg`;
+  }
 }

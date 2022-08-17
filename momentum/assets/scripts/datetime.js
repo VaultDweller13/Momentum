@@ -41,6 +41,8 @@ export function getTimeOfDay(lang) {
         }
     }
 
+    lang = lang.toUpperCase();
+
     if (hour >= 6 && hour < 12) return `${translation[lang].morning}`;
     if (hour >= 12 && hour < 18) return `${translation[lang].afternoon}`;
     if (hour >= 18 && hour < 24) return `${translation[lang].evening}`;
