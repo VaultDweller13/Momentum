@@ -1,26 +1,55 @@
-export function setBackground(element, timeOfDay, imageIndex) {
-  const imageNumber = imageIndex ? imageIndex : getRandomNumber(1, 21).toString().padStart(2, '0');
-  const url = `https://raw.githubusercontent.com/VaultDweller13/stage1-tasks/assets/images/${timeOfDay}/${imageNumber}.jpg`;
-  let img = new Image();
-  img.src = url;
+const unsplashKey ='pPRP0B5yczGaO6vkwpyN-pgy2hJEQ_6UBMs0NON5-4I';
+const flickrKey ='35e6180608930bbaefa70302798699ac';
+let currentImageIndex;
+let currentImagesArray;
+let currentSource;
+let currentQuery;
 
-  img.addEventListener('load', () => {
-    element.style.backgroundImage = `url(${img.src})`;
-    img = null;
-  });
+export async function getBackgroundImage(source, query, imageIndex) {
+  const imagesArray = await getImages(source, query);
+  const imageNumber = imageIndex ?? getRandomNumber(0, imagesArray.length);
+  currentImageIndex = imageNumber;
+  currentImagesArray = imagesArray;
+  currentSource = source;
+  currentQuery = query;
+
+  return imagesArray[imageNumber];
 }
 
-export function changeSlide(element, offset) {
-  const pathArray = element.style.backgroundImage.split('/');
-  const imageNumber = pathArray.slice(-1)[0];
-  const timeOfDay =  pathArray.slice(-2, -1);
-  let slideNumber = +imageNumber.split('.')[0] + offset;
+export function next() {
+  const length = currentImagesArray.length
+  return currentImageIndex + 1 >= length ? 0 : currentImageIndex + 1;
+}
 
-  slideNumber = slideNumber < 1 ? 20 : slideNumber > 20 ? 1 : slideNumber;  
-
-  return setBackground(element, timeOfDay, slideNumber.toString().padStart(2, '0'));
+export function prev() {
+  const length = currentImagesArray.length
+  return currentImageIndex - 1 < 0 ? length - 1 : currentImageIndex - 1;
 }
 
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min) + min); 
+}
+
+export function getImages(source, query) {
+  const photoAPI = {
+    unsplash: `https://api.unsplash.com/search/photos?page=1&query=${query}&client_id=${unsplashKey}`,
+    flickr: `htttps://flickr.photos.search&api_key=${flickrKey}&tags=${query}&format=json`
+  }
+
+  if (source === 'github') {
+    const images = [];
+
+    for(let i = 1; i < 21; i++) {
+      const imageNumber = i.toString().padStart(2, '0');
+      images.push(`https://raw.githubusercontent.com/VaultDweller13/stage1-tasks/assets/images/${query}/${imageNumber}.jpg`)
+    }
+    return images;
+  }
+  
+  return fetch(photoAPI[source])
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+      return data.results.map(item => item.urls.regular);
+    });
 }

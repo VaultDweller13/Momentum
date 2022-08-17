@@ -58,6 +58,7 @@ const popUpContainer = document.querySelector('.pop-up-container')
 const settingsPopUp = document.querySelector('.pop-up-settings');
 const blockSelectors = Array.from(document.querySelectorAll('.block-selector'));
 const languageSelector = document.querySelector('.language-select');
+const photoSourceSelector = document.querySelector('.photo-select');
 const labelLanguage = document.querySelector('.label-language');
 const labelPhoto = document.querySelector('.label-photo');
 const labelTag = document.querySelector('.label-tag');
@@ -107,7 +108,24 @@ function getLocalStorage() {
 }
 
 // Set background
-body.style.backgroundImage = slider.setBackground(body, dateTime.getTimeOfDay('EN'));
+let source = 'github';
+let query = dateTime.getTimeOfDay('EN');
+
+setBackground(source, query);
+
+async function setBackground(source, query, imageIndex) {
+  let img = new Image();
+  img.src = await slider.getBackgroundImage(source, query, imageIndex);
+  
+  img.addEventListener('load', () => {
+    body.style.backgroundImage = `url(${img.src})`;
+    img = null;
+  });
+}
+
+// Slider buttons
+sliderButtonLeft.addEventListener('click', () => setBackground(source, query, slider.prev()));
+sliderButtonRight.addEventListener('click', () => setBackground(source, query, slider.next()));
 
 // Set audio player
 const player = new AudioPlayer(playList);
@@ -141,10 +159,6 @@ function togglePlayPause() {
   playButton.classList.toggle('pause');
   playButton.classList.toggle('play');
 }
-
-// Slider buttons
-sliderButtonLeft.addEventListener('click', e => body.style.backgroundImage = slider.changeSlide(body, -1));
-sliderButtonRight.addEventListener('click', e => body.style.backgroundImage = slider.changeSlide(body, 1));
 
 // Set time and date
 showDateTime();
@@ -280,6 +294,21 @@ blockSelectors.forEach(block => {
   } );
 });
 
+photoSourceSelector.addEventListener('change', () => {
+  console.log(photoSourceSelector.value, tagInput.value)
+  source = photoSourceSelector.value;
+  if (tagInput.value) query = tagInput.value;
+
+  setBackground(source, query);
+});
+
+tagInput.addEventListener('change', () => {
+  query = tagInput.value;
+  console.log(query);
+
+  setBackground(source, query);
+})
+
 function getWidgets() {
   return blockSelectors
     .filter(block => block.checked)
@@ -352,7 +381,7 @@ function populateSettings() {
 }
 
 
-console.log(`Ваша оценка - 120 баллов 
+console.log(`Ваша оценка - 125 баллов 
 Отзыв по пунктам ТЗ:
 Не выполненные/не засчитанные пункты:
 1) добавлен прогресс-бар в котором отображается прогресс проигрывания 
@@ -369,11 +398,9 @@ console.log(`Ваша оценка - 120 баллов
 
 7) можно запустить и остановить проигрывания трека кликом по кнопке Play/Pause рядом с ним в плейлисте 
 
-8) в качестве источника изображений может использоваться Unsplash API 
+8) в качестве источника изображений может использоваться Flickr API 
 
-9) в качестве источника изображений может использоваться Flickr API 
-
-10) ToDo List - список дел (как в оригинальном приложении) или Список ссылок (как в оригинальном приложении) или Свой собственный дополнительный функционал, по сложности аналогичный предложенным 
+9) ToDo List - список дел (как в оригинальном приложении) или Список ссылок (как в оригинальном приложении) или Свой собственный дополнительный функционал, по сложности аналогичный предложенным 
 
 Выполненные пункты:
 1) время выводится в 24-часовом формате, например: 21:01:00 
@@ -424,16 +451,18 @@ console.log(`Ваша оценка - 120 баллов
 
 24) переводятся настройки приложения, при переключении языка приложения в настройках, язык настроек тоже меняется 
 
-25) в настройках приложения можно указать язык приложения (en/ru или en/be)  
+25) в качестве источника изображений может использоваться Unsplash API 
 
-26) в настройках приложения можно указать источник получения фото для фонового изображения: коллекция изображений GitHub, Unsplash API, Flickr API 
+26) в настройках приложения можно указать язык приложения (en/ru или en/be)  
 
-27) если источником получения фото указан API, в настройках приложения можно указать тег/теги, для которых API будет присылает фото 
+27) в настройках приложения можно указать источник получения фото для фонового изображения: коллекция изображений GitHub, Unsplash API, Flickr API 
 
-28) в настройках приложения можно скрыть/отобразить любой из блоков, которые находятся на странице: время, дата, приветствие, цитата дня, прогноз погоды, аудиоплеер, список дел/список ссылок/ваш собственный дополнительный функционал 
+28) если источником получения фото указан API, в настройках приложения можно указать тег/теги, для которых API будет присылает фото 
 
-29) Скрытие и отображение блоков происходит плавно, не влияя на другие элементы, которые находятся на странице, или плавно смещая их 
+29) в настройках приложения можно скрыть/отобразить любой из блоков, которые находятся на странице: время, дата, приветствие, цитата дня, прогноз погоды, аудиоплеер, список дел/список ссылок/ваш собственный дополнительный функционал 
 
-30) настройки приложения сохраняются при перезагрузке страницы 
+30) Скрытие и отображение блоков происходит плавно, не влияя на другие элементы, которые находятся на странице, или плавно смещая их 
+
+31) настройки приложения сохраняются при перезагрузке страницы 
 
 `)
