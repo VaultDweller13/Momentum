@@ -89,11 +89,16 @@ button:hover {
 }
 
 .play {
-  background: url(../img/svg/audio-play.svg);
+  background: url(../img/svg/audio-play.svg) center / contain;
+}
+
+.play-small {
+  width: 1.6rem;
+  height: 1.6rem;
 }
 
 .pause {
-  background: url(../img/svg/audio-pause.svg);
+  background: url(../img/svg/audio-pause.svg) center / contain;
 }
 
 .next-track {
@@ -126,6 +131,10 @@ button:hover {
   background-color: #ff9100;
 }
 
+.audio-track {
+  display: flex;
+  gap: 0.5rem;
+}
 .current-track {
   color: #f1cf0b;
 }

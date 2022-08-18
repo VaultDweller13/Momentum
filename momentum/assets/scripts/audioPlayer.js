@@ -30,20 +30,23 @@ export class AudioPlayer {
 
     track.textContent = this.getCurrentTrack().description;
     this.showDuration();
+    this.updatePlayButtons();
   }
 
   pause() {
     this.current.pause();
+    this.updatePlayButtons();
   }
 
   stop() {
-    this.pause();
+    this.current.pause();
+
     this.current.currentTime = 0;
     this.current.parentElement.classList.remove('current-track');
   }
 
   next() {
-    const currentIndex = this.#getCurrentIndex();
+    const currentIndex = this.getCurrentIndex();
 
     this.stop()
     
@@ -55,7 +58,7 @@ export class AudioPlayer {
   }
 
   prev() {
-    const currentIndex = this.#getCurrentIndex();
+    const currentIndex = this.getCurrentIndex();
 
     this.stop()
 
@@ -82,10 +85,22 @@ export class AudioPlayer {
     const trackList = this.widget.querySelector('.audio-player');
     this.playList.forEach(item => {
       const li = document.createElement('li');
-      const audio = item.audio;
+      const button = document.createElement('button');
       
+      li.classList.add('audio-track');
       li.textContent = item.description;
-      li.appendChild(item.audio);
+      button.classList.add('button', 'play', 'play-small');
+     
+      button.addEventListener('click', () => {
+        if (this.current !== item.audio) {
+          this.stop();
+          this.current = item.audio;
+        } 
+
+        this.isPaused() ? this.play() : this.pause();
+      });
+      
+      li.prepend(button, item.audio);
       trackList.appendChild(li);
     });
 
@@ -93,6 +108,26 @@ export class AudioPlayer {
     track.textContent = this.getCurrentTrack().description;
 
     this.showDuration();
+  }
+
+  updatePlayButtons() {
+    const mainPlayButton = this.widget.querySelector('.play-button-main');
+    const buttons = Array.from(this.widget.querySelectorAll('.play-small'));
+
+    mainPlayButton.classList.toggle('play');
+    mainPlayButton.classList.toggle('pause');
+
+    buttons.forEach((button, index) => {
+      if (this.getCurrentIndex() === index) {
+        button.classList.toggle('pause');
+        button.classList.toggle('play');
+      } else if (button.classList.contains('pause')){
+        button.classList.toggle('pause');
+        button.classList.toggle('play');
+        mainPlayButton.classList.toggle('play');
+        mainPlayButton.classList.toggle('pause');
+      }
+    });
   }
 
   showDuration() {
@@ -116,11 +151,11 @@ export class AudioPlayer {
     }
   }
 
-  #getCurrentIndex() {
+  getCurrentIndex() {
     return this.playList.findIndex(item => item.audio === this.current);
   }
 
   getCurrentTrack() {
-    return this.playList[this.#getCurrentIndex()];
+    return this.playList[this.getCurrentIndex()];
   }
 } 
