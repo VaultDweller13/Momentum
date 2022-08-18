@@ -19,7 +19,7 @@ export class AudioPlayer {
 
     this.widget = element;
     this.current = this.playList[0].audio;
-    this.volume = 1;
+    this.volume = 0.5;
   }
 
   play() {
@@ -69,12 +69,30 @@ export class AudioPlayer {
     this.play();
   }
 
-  mute() {
-    if (this.volume) {
-      this.volume = 0;
-    } else this.volume = 1;
+  initVolumeSlider() {
+    const volumeSlider = this.widget.querySelector('.volume-slider');
+    const muteButton = this.widget.querySelector('.button.mute');
+    volumeSlider.addEventListener('click', (e) => {
+      let y = 100 - 2 * e.offsetY
+      let currentVolume = (y > 96 ? 100 : y < 4 ? 0 : y);
+      this.volume = currentVolume / 100;
+      this.current.volume = this.volume;
+      volumeSlider.firstElementChild.style.height = currentVolume + '%';
 
-    this.current.volume = this.volume
+      if (this.volume) {
+        muteButton.classList.add('mute');
+        muteButton.classList.remove('unmute');
+      } else {
+        muteButton.classList.remove('mute');
+        muteButton.classList.add('unmute');
+      }
+    })
+  }
+
+  mute() {
+    if (this.current.volume) {
+      this.current.volume = 0;
+    } else this.current.volume = this.volume;
   }
 
   isPaused() {
@@ -108,6 +126,7 @@ export class AudioPlayer {
     track.textContent = this.getCurrentTrack().description;
 
     this.showDuration();
+    this.initVolumeSlider();
   }
 
   updatePlayButtons() {
