@@ -19,6 +19,7 @@ export class AudioPlayer {
 
     this.widget = element;
     this.current = this.playList[0].audio;
+    this.currentTime = 0;
     this.volume = 0.5;
   }
 
@@ -67,6 +68,17 @@ export class AudioPlayer {
     } else this.current = this.playList[this.playList.length - 1].audio; 
 
     this.play();
+  }
+
+  initProgressBar() {
+    const progressBar = this.widget.querySelector('.progress-bar');
+    const length = Math.round(progressBar.getBoundingClientRect().width);
+    progressBar.addEventListener('click', (e) => {
+      const x = e.offsetX <= 2 ? 0 : e.offsetX >= length - 2 ? length : e.offsetX;
+      progressBar.firstElementChild.style.width = (x / length) * 100 + '%';
+      this.currentTime = Math.floor(this.current.duration * (x / length));
+      this.current.currentTime = this.currentTime;
+    });
   }
 
   initVolumeSlider() {
@@ -127,6 +139,7 @@ export class AudioPlayer {
 
     this.showDuration();
     this.initVolumeSlider();
+    this.initProgressBar();
   }
 
   updatePlayButtons() {
@@ -156,6 +169,7 @@ export class AudioPlayer {
     const currentTime = formatTime(this.current.currentTime);
 
     durationBlock.textContent = `${currentTime}/${duration}`;
+    this.currentTime = this.current.currentTime;
     progressLine.style.width = Math.floor(+this.current.currentTime/+this.getCurrentTrack().duration*100)  + '%';
 
     setTimeout(() => {
