@@ -1,4 +1,6 @@
 RS-School JS/FE Pre-school 2022Q2 task
+
+https://vaultdweller13.github.io/Momentum/
 ___
 
 Google Chrome Web Store Momentum-like app, written in pure HTML/CSS/JS
